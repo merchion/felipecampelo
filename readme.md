@@ -23,6 +23,7 @@ O blog será desenvolvido utilizando uma série de tecnologias modernas e práti
 1. **Configuração do Ambiente de Desenvolvimento**:
    - Configurar o ambiente local para desenvolvimento usando React e Vite.
    - Preparar o Dockerfile e docker-compose para o ambiente de desenvolvimento.
+   - O React será feito usando Typescript e o SWC será o compilador do Typescript devido sua simplicidade de configuração e velocidade
 
 2. **Estruturação do Projeto**:
    - Criar a estrutura de diretórios do projeto (`frontend` para React e `cms` para Directus).
@@ -58,10 +59,6 @@ O blog será desenvolvido utilizando uma série de tecnologias modernas e práti
     - Monitorar o desempenho do aplicativo e fazer ajustes conforme necessário.
     - Planejar e implementar novas funcionalidades.
 
-## Conclusão
+## Objetivos
 
-Este projeto representa uma oportunidade de compartilhar conhecimentos e demonstrar competências em diversas tecnologias e práticas de desenvolvimento modernas. Estou ansioso para construir, aprender e crescer através do desenvolvimento deste blog.
-
----
-
-_Felipe Campelo_
+Este projeto representa uma oportunidade de compartilhar conhecimentos e demonstrar competências em diversas tecnologias e práticas de desenvolvimento modernas.
