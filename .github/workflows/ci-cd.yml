@@ -49,6 +49,6 @@ jobs:
       #   working-directory: ./frontend
       #   run: npm test
 
-      - name: Teste de sanidade Directus
+      - name: Sanity testing on Directus
         run: |
-          curl -s -o /dev/null -w "%{http_code}" http://localhost:8055/server/health | grep 200
+          curl -s -o /dev/null -w "%{http_code}" http://localhost:8055/server/health | grep ok
