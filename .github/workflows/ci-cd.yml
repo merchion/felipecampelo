@@ -56,7 +56,7 @@ jobs:
           # PUBLIC_URL: 'https://felipecampelo.dev'
         ports:
           - "8055:8055"
-        options: --entrypoint "tail -f /dev/null"
+        options: sh -c "while true; do sleep 1000; done"
 
     steps:
       - name: Checkout code
