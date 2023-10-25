@@ -15,6 +15,13 @@ jobs:
   build-and-test:
     runs-on: ubuntu-latest
 
+    env:
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_DATABASE: felipecampelo
+      DB_USER: felipecampelo
+      DB_PASSWORD: felipecampelo159753
+
     services:
       postgres:
         image: postgres:latest
@@ -77,7 +84,7 @@ jobs:
 
       - name: Waiting PostgreSQL
         run: |
-          until PGPASSWORD=$POSTGRES_PASSWORD psql -h localhost -U $POSTGRES_USER -d $POSTGRES_DB -c '\q'; do
+          until PGPASSWORD=$DB_PASSWORD psql -h $DB_HOST -p $DB_PORT -U $DB_USER -d $DB_DATABASE -c '\q'; do
             sleep 1
           done
 
@@ -86,9 +93,6 @@ jobs:
           until (echo ping; sleep 1) | nc localhost 6379; do
             sleep 1
           done
-      
-      - name: Initialize Directus
-        run: docker start ${{ job.services.directus.id }}
 
       - name: Waiting Directus
         run: |
@@ -98,11 +102,17 @@ jobs:
 
       - name: Sanity testing on Directus
         run: |
+          success=false
           for i in {1..30}; do
             if curl -s http://localhost:8055/server/health | grep '{"status":"ok"}'; then
               echo "Directus está pronto!"
+              success=true
               break
             fi
             echo "Aguardando Directus ficar pronto..."
             sleep 10
           done
+          if [ "$success" = false ]; then
+            echo "Erro: Directus não ficou pronto após várias tentativas."
+            exit 1
+          fi
