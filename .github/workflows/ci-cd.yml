@@ -56,7 +56,6 @@ jobs:
           # PUBLIC_URL: 'https://felipecampelo.dev'
         ports:
           - "8055:8055"
-        options: sh -c "while true; do sleep 1000; done"
 
     steps:
       - name: Checkout code
@@ -99,4 +98,11 @@ jobs:
 
       - name: Sanity testing on Directus
         run: |
-          curl -s -o /dev/null -w "%{http_code}" http://localhost:8055/server/health | grep ok
+          for i in {1..30}; do
+            if curl -s http://localhost:8055/server/health | grep '{"status":"ok"}'; then
+              echo "Directus está pronto!"
+              break
+            fi
+            echo "Aguardando Directus ficar pronto..."
+            sleep 10
+          done
