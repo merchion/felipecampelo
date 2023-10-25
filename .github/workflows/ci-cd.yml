@@ -56,6 +56,7 @@ jobs:
           # PUBLIC_URL: 'https://felipecampelo.dev'
         ports:
           - "8055:8055"
+        options: --entrypoint "sleep infinity"
 
     steps:
       - name: Checkout code
@@ -75,11 +76,25 @@ jobs:
       #   working-directory: ./frontend
       #   run: npm test
 
-      - name: Waiting Directus be ready
+      - name: Waiting PostgreSQL
         run: |
-          while ! curl -s http://localhost:8055/server/ping | grep "pong"; do
-            echo "Waiting Directus be ready..."
-            sleep 5
+          until PGPASSWORD=$POSTGRES_PASSWORD psql -h localhost -U $POSTGRES_USER -d $POSTGRES_DB -c '\q'; do
+            sleep 1
+          done
+
+      - name: Waiting Redis
+        run: |
+          until (echo ping; sleep 1) | nc localhost 6379; do
+            sleep 1
+          done
+      
+      - name: Initialize Directus
+        run: docker start ${{ job.services.directus.id }}
+
+      - name: Waiting Directus
+        run: |
+          until curl -s http://localhost:8055/server/ping | grep pong; do
+            sleep 1
           done
 
       - name: Sanity testing on Directus
