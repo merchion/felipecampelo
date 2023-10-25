@@ -30,6 +30,32 @@ jobs:
         image: redis:latest
         ports:
           - 6379:6379
+      
+      directus:
+        image: directus/directus:10.6.4
+        env:
+          KEY: '6PiJbh2xYTDcnvkfEb05kKz55gHeT2VWibWGke9hBoPY3WyYTQNjxBwqfMU7XJV3'
+          SECRET: '3yix/oBI3L+4Tlkg3ed2KQ=='
+    
+          DB_CLIENT: 'pg'
+          DB_HOST: 'postgres'
+          DB_PORT: '5432'
+          DB_DATABASE: 'felipecampelo'
+          DB_USER: 'felipecampelo'
+          DB_PASSWORD: 'felipecampelo159753'
+    
+          CACHE_ENABLED: 'true'
+          CACHE_STORE: 'redis'
+          REDIS: 'redis://cache:6379'
+    
+          ADMIN_EMAIL: 'website@felipecampelo.dev'
+          ADMIN_PASSWORD: 'felipecampelo159753@!'
+    
+          # Make sure to set this in production
+          # (see https://docs.directus.io/self-hosted/config-options#general)
+          # PUBLIC_URL: 'https://felipecampelo.dev'
+        ports:
+          - "8055:8055"
 
     steps:
       - name: Checkout code
@@ -48,6 +74,13 @@ jobs:
       # - name: Executar testes (React App)
       #   working-directory: ./frontend
       #   run: npm test
+
+      - name: Waiting Directus be ready
+        run: |
+          while ! curl -s http://localhost:8055/server/ping | grep "pong"; do
+            echo "Waiting Directus be ready..."
+            sleep 5
+          done
 
       - name: Sanity testing on Directus
         run: |
