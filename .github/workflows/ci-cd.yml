@@ -90,7 +90,7 @@ jobs:
 
       - name: Waiting Redis
         run: |
-          while ! (echo ping | nc localhost 6379); do
+          until (printf "PING\r\n" | nc localhost 6379) | grep -q PONG; do
             sleep 1
           done
 
