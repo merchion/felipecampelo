@@ -1,0 +1,71 @@
+version: '3.8'
+
+services:
+  nginx:
+    container_name: nginx
+    image: nginx:latest
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+    ports:
+      - "80:80"
+
+  app:
+    container_name: frontend
+    build: ./frontend
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    ports:
+      - "5173:5173"
+
+  postgres:
+    container_name: postgresql
+    image: postgres:latest
+    platform: linux/amd64
+    environment:
+      POSTGRES_USER: felipecampelo
+      POSTGRES_PASSWORD: felipecampelo159753
+      POSTGRES_DB: felipecampelo
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    ports:
+      - "9876:5432"
+
+  cache:
+    image: redis:latest
+
+  directus:
+    container_name: directus
+    image: directus/directus:10.6.4
+    environment:
+      KEY: '6PiJbh2xYTDcnvkfEb05kKz55gHeT2VWibWGke9hBoPY3WyYTQNjxBwqfMU7XJV3'
+      SECRET: '3yix/oBI3L+4Tlkg3ed2KQ=='
+
+      DB_CLIENT: 'pg'
+      DB_HOST: 'postgres'
+      DB_PORT: '5432'
+      DB_DATABASE: 'felipecampelo'
+      DB_USER: 'felipecampelo'
+      DB_PASSWORD: 'felipecampelo159753'
+
+      CACHE_ENABLED: 'true'
+      CACHE_STORE: 'redis'
+      REDIS: 'redis://cache:6379'
+
+      ADMIN_EMAIL: 'website@felipecampelo.dev'
+      ADMIN_PASSWORD: 'felipecampelo159753@!'
+
+      # Make sure to set this in production
+      # (see https://docs.directus.io/self-hosted/config-options#general)
+      # PUBLIC_URL: 'https://felipecampelo.dev'
+    ports:
+      - "8055:8055"
+    volumes:
+      - ./cms/uploads:/directus/uploads
+      - ./cms/extensions:/directus/extensions
+    depends_on:
+      - cache
+      - postgres
+      
+volumes:
+  pgdata:
