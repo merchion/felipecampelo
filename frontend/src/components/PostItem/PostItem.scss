@@ -1,0 +1,27 @@
+.post-item img {
+  width: 22px;
+}
+
+.post-item .subtitle {
+  color: #b22222 !important;
+}
+.tag-list {
+  border-radius: .1rem;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.tag-list small {
+  margin-right: 15px;
+  margin-bottom: 5px;
+  border-bottom: 1px solid #ddd;
+}
+
+.tag-list small:last-child {
+  margin-right: 0;
+}
+
+.btn-continue img {
+  filter: invert(1);
+  width: 22px;
+}

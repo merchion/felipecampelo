@@ -1,0 +1,66 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
+
+html, body {
+  font-family: 'Poppins';
+  --bs-body-font-size: .95rem;
+}
+
+.form-control:focus {
+  border-color: transparent;
+  box-shadow: 0 0 0 0.2rem rgba(33, 37, 41, 0.25);
+}
+
+.form-control {
+  font-size: .95rem;
+  padding: .75rem .75rem;
+}
+
+a {
+  text-decoration: none;
+}
+
+a:not(.btn):hover {
+  text-decoration: underline;
+}
+
+.btn-primary {
+  --bs-btn-color: #fff !important;
+  --bs-btn-bg: #000;
+  --bs-btn-border-color: #000;
+  --bs-btn-hover-color: #fff;
+  --bs-btn-hover-bg: #333;
+  --bs-btn-hover-border-color: #444;
+  --bs-btn-focus-shadow-rgb: 49,132,253;
+  --bs-btn-active-color: #fff;
+  --bs-btn-active-bg: #444;
+  --bs-btn-active-border-color: #0a53be;
+  --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+  --bs-btn-disabled-color: #fff;
+  --bs-btn-disabled-bg: #000;
+  --bs-btn-disabled-border-color: #000;
+}
+
+.featured-word-dark {
+  background: cornsilk;
+  padding: 3px;
+  border-radius: 3px;
+  color: black;
+  font-weight: 600;
+}
+
+.featured-underline-dark {
+  border-bottom: 2px solid cornsilk;
+}
+
+.social-icon img {
+  height: 24px;
+  margin-right: 5px;
+}
+
+.social-icon:last-child img {
+  height: 18px;
+}
+
+.felipe-campelo-author img {
+  height: 18px;
+}
